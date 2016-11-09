@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/OrangeTux/einder.svg?branch=master)](https://travis-ci.org/OrangeTux/einder)
+[![PyPI](https://img.shields.io/pypi/v/einder.svg)](https://pypi.python.org/pypi/einder/)
+
 # Einder
 
 Einder is an API wrapper for the set-top boxes SMT C7400 and SMT C7401. In the

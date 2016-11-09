@@ -1,5 +1,4 @@
 import pytest
-import socket
 from threading import Thread
 from socketserver import BaseRequestHandler, TCPServer
 

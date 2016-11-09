@@ -1,11 +1,9 @@
 import time
-import struct
-from einder import keys
 
 # A little nap is required so the test server can process requests and add them
-# to its list with requests before we check if this list contains what we
-# expect.
+# to its requests list before we check this list.
 sleep = 0.01
+
 
 def test_toggle_power(server, client):
     client.toggle_power()

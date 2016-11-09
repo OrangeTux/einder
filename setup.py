@@ -4,7 +4,7 @@ setup(name='einder',
       version='0.1.0',
       author='Auke Willem Oosterhoff',
       author_email='auke@orangetux.nl',
-      description='API wrapper for Samsumgs set-top boxes SMT-G7400 and SMT-G7401.',
+      description='API wrapper for Samsumgs set-top boxes SMT-G7400 and SMT-G7401.',  # NOQA
       url='https://github.com/OrangeTux/einder',
       packages=[
         'einder'
@@ -14,5 +14,5 @@ setup(name='einder',
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Topic :: Multimedia',
-     ])
+        'Topic :: Multimedia']
+     )

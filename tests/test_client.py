@@ -5,15 +5,6 @@ import time
 sleep = 0.01
 
 
-def test_toggle_power(server, client):
-    client.toggle_power()
-
-    time.sleep(sleep)
-    assert server.requests == [
-        b'\x04\x01\x00\x00\x00\x00\xe0\x00', b'\x04\x00\x00\x00\x00\x00\xe0\x00'
-    ]
-
-
 def test_select_channel(server, client):
     client.select_channel(501)
 

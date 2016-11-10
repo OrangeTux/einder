@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='einder',
-      version='0.1.1',
+      version='0.2.0',
       author='Auke Willem Oosterhoff',
       author_email='auke@orangetux.nl',
       description='API wrapper for Samsumgs set-top boxes SMT-G7400 and SMT-G7401.',  # NOQA

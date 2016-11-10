@@ -1,5 +1,6 @@
 import socket
 import struct
+from http.client import HTTPConnection
 
 from einder import keys
 from einder.exceptions import AuthenticationError
@@ -27,7 +28,7 @@ class Client:
             self.con.close()
 
     def authorize(self):
-        """ Use the magic of a unicorn and summon the set-top box so it listens
+        """ Use the magic of a unicorn and summon the set-top box to listen
         to us.
 
                             /
@@ -72,9 +73,45 @@ class Client:
         cmd = struct.pack(">BBBBBBH", 4, 0, 0, 0, 0, 0, key)
         self.con.send(cmd)
 
-    def toggle_power(self):
-        """ Toggle the power state of the set-top box. """
-        self.send_key(keys.POWER)
+    def is_powered_on(self):
+        """ Get power status of device.
+
+        The set-top box can't explicitly powered on or powered off the device.
+        The power can only be toggled.
+
+        To find out the power status of the device a little trick is used.
+        When the set-top box is powered a web server is running on port 62137
+        of the device server a file at /DeviceDescription.xml. By checking if
+        this file is available the power status can be determined.
+
+        :return: Boolean indicitation if device is powered on.
+        """
+        host = '{0}:62137'.format(self.ip)
+        try:
+            HTTPConnection(host, timeout=2).\
+                request('GET', '/DeviceDescription.xml')
+        except (ConnectionRefusedError, socket.timeout) as e:
+            print('is powered off', e)
+            return False
+
+        print('device is powered on')
+        return True
+
+    def power_on(self):
+        """ Power on the set-top box.
+
+        """
+        if not self.is_powered_on():
+            print('turn power on')
+            self.send_key(keys.POWER)
+
+    def power_off(self):
+        """ Power on the set-top box.
+
+        """
+        if self.is_powered_on():
+            print('turn power off')
+            self.send_key(keys.POWER)
 
     def select_channel(self, channel):
         """ Select a channel.

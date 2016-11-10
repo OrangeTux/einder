@@ -18,20 +18,45 @@ $ pip install einder
 
 ## Usage
 
+`einder.Client` controls the set-top box by sending bytes. These bytes
+represent the buttons of a remote control. You can find all supported keys
+in [`einder.keys`][keys]. The example shows how to send keys.
+
 ```python
+import time
+
 from einder import Client
+from einder import keys
 
-c = Client("192.168.1.245")
-c.toggle_power()
+# Replace IP with the IP of your set-top box. The port parameter is optional,
+# by default its 5900.
+c = Client("192.168.1.245", port=5900)
 
+c.power_on()
+
+# Wait a few seconds the set-top box to start.
+time.sleep(5)
+
+# Select channel 501.
+c.send_key(keys.NUM_5)
+c.send_key(keys.NUM_0)
+c.send_key(keys.NUM_1)
+
+# For selecting a channel einder.Client offers a small helper function.
+c.select_channel(501)
+
+# No watch some TV...
+
+c.power_off()
+c.disconnect()
 ```
 
-the `einder.Client` can also be used as a context manager:
+The `einder.Client` can also be used as a context manager:
 
 ```python
 from einder import Client
 
-with Client(ip="192.168.1.245", port=5900) as c:
+with Client("192.168.1.245") as c:
     c.select_channel(501)
 ```
 
@@ -40,5 +65,6 @@ with Client(ip="192.168.1.245", port=5900) as c:
 This software is licensed under the [MIT license][license].
 
 [horizoncontrol]: https://github.com/kuijp/horizoncontrol
+[keys]: einder/keys.py
 [kuijp]: https://github.com/kuijp
 [license]: LICENSE

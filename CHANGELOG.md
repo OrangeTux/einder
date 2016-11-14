@@ -1,3 +1,9 @@
+## 0.3.0 _2016-11-14_
+
+* [#3][3] Add logging.
+
+[3]: https://github.com/OrangeTux/einder/issues/3
+
 ## 0.2.0 _2016-11-10_
 
 * [#1][1] Replace Client.toggle_power() with Client.power_on() and Client.power_off().

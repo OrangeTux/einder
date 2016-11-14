@@ -1,9 +1,12 @@
 import socket
 import struct
+from logging import getLogger
 from http.client import HTTPConnection
 
 from einder import keys
 from einder.exceptions import AuthenticationError
+
+log = getLogger(__name__)
 
 
 class Client:
@@ -22,10 +25,15 @@ class Client:
         self.con = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.con.connect((self.ip, self.port))
 
+        log.debug('Connected with set-top box at %s:%s.',
+                  self.ip, self.port)
+
     def disconnect(self):
         """ Disconnect closes the connection to the Horizon box. """
         if self.con is not None:
             self.con.close()
+            log.debug('Closed connection with with set-top box at %s:%s.',
+                      self.ip, self.port)
 
     def authorize(self):
         """ Use the magic of a unicorn and summon the set-top box to listen
@@ -60,10 +68,14 @@ class Client:
         response = struct.unpack(">I", msg)
 
         if response[0] != 0:
+            log.debug("Failed to authorize with set-top at %s:%s.",
+                      self.ip, self.port)
             raise AuthenticationError()
 
         # Dunno where this is good for. But otherwise the client doesn't work.
         self.con.send(b'0')
+        log.debug('Authorized succesfully with set-top box at %s:%s.',
+                  self.ip, self.port)
 
     def send_key(self, key):
         """ Send a key to the Horizon box. """
@@ -90,27 +102,25 @@ class Client:
         try:
             HTTPConnection(host, timeout=2).\
                 request('GET', '/DeviceDescription.xml')
-        except (ConnectionRefusedError, socket.timeout) as e:
-            print('is powered off', e)
+        except (ConnectionRefusedError, socket.timeout):
+            log.debug('Set-top box at %s:%s is powered off.',
+                      self.ip, self.port)
+
             return False
 
-        print('device is powered on')
+        log.debug('Set-top box at %s:%s is powered on.', self.ip, self.port)
         return True
 
     def power_on(self):
-        """ Power on the set-top box.
-
-        """
+        """ Power on the set-top box. """
         if not self.is_powered_on():
-            print('turn power on')
+            log.debug('Powering on set-top box at %s:%s.', self.ip, self.port)
             self.send_key(keys.POWER)
 
     def power_off(self):
-        """ Power on the set-top box.
-
-        """
+        """ Power on the set-top box. """
         if self.is_powered_on():
-            print('turn power off')
+            log.debug('Powering off set-top box at %s:%s.', self.ip, self.port)
             self.send_key(keys.POWER)
 
     def select_channel(self, channel):

@@ -8,7 +8,7 @@ In the Netherlands these boxes are sold by a big Dutch cable operator
 under the name Horizon Box. The name Einder is a Dutch synonym for
 horizon.
 
-I'd like to thank [@kuijp]\ `kuijp <https://github.com/kuijp>`__ for his
+I'd like to thank `kuijp <https://github.com/kuijp>`__ for his
 work on `horizoncontrol <https://github.com/kuijp/horizoncontrol>`__.
 This is just a shameless Python rip off.
 
@@ -24,15 +24,19 @@ Usage
 
 ``einder.Client`` controls the set-top box by sending bytes. These bytes
 represent the buttons of a remote control. You can find all supported
-keys in ```einder.keys`` <einder/keys.py>`__. The example shows how to
+keys in `einder.keys <einder/keys.py>`__. The example shows how to
 send keys.
 
 .. code:: python
 
     import time
 
+    import logging
     from einder import Client
     from einder import keys
+
+    # Enable logging.
+    logging.basicConfig(level=logging.DEBUG)
 
     # Replace IP with the IP of your set-top box. The port parameter is optional,
     # by default its 5900.

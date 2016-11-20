@@ -10,7 +10,7 @@ BACK = 0xe002
 CHAN_UP = 0xe006
 """ Select next channel. """
 
-CHAN_DWN = 0xe007
+CHAN_DOWN = 0xe007
 """ Select previous channel. """
 
 HELP = 0xe009
@@ -90,4 +90,4 @@ DVR = 0xef29
 """ Open DVR menu. """
 
 TV = 0xef2a
-""" Close all menus and go back to TV show. """
+""" Close all menus and go back to TV show or go to previous channel. """

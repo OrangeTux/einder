@@ -1,3 +1,9 @@
+## 0.3.1 _2016-11-20_
+
+* [#4][4] Rename keys.CHAN_DWN to keys.CHAN_DOWN.
+
+[4]: https://github.com/OrangeTux/einder/issues/4
+
 ## 0.3.0 _2016-11-14_
 
 * [#3][3] Add logging.
